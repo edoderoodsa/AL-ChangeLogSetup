@@ -170,15 +170,18 @@ codeunit 50602 "ChangeLogSetup"
     local procedure AddLogField(TableNo: Integer; FieldNo: Integer)
     var
         FieldSetup: Record "Change Log Setup (Field)"; //table404
+        Object: Record AllObjWithCaption;
     begin
-        FieldSetup.Init();
-        FieldSetup.Validate("Table No.", TableNo);
-        FieldSetup.Validate("Field No.", FieldNo);
-        FieldSetup."Log Deletion" := true;
-        FieldSetup."Log Insertion" := true;
-        FieldSetup."Log Modification" := true;
-        if not FieldSetup.Insert(true) then
-            FieldSetup.Modify();
+        if (Object.Get(Object."Object Type"::TableData, TableNo)) then begin
+            FieldSetup.Init();
+            FieldSetup.Validate("Table No.", TableNo);
+            FieldSetup.Validate("Field No.", FieldNo);
+            FieldSetup."Log Deletion" := true;
+            FieldSetup."Log Insertion" := true;
+            FieldSetup."Log Modification" := true;
+            if not FieldSetup.Insert(true) then
+                FieldSetup.Modify();
+        end
     end;
 
     local procedure AddSupplierFields()
