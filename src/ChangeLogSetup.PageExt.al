@@ -21,7 +21,6 @@ pageextension 50602 "ChangeLogSetupExt" extends "Change Log Setup"
                         ChangeLogSetup.Run();
                 end;
             }
-
             action("Delete")
             {
                 ApplicationArea = All;
@@ -33,6 +32,7 @@ pageextension 50602 "ChangeLogSetupExt" extends "Change Log Setup"
                 trigger OnAction()
                 var
                     ChangeLogSetupTable: Record "Change Log Setup (Table)";
+
                     ConfirmAddSetupQst: Label 'Do you want to delete the default setup?';
                 begin
                     if Confirm(ConfirmAddSetupQst, true) then
